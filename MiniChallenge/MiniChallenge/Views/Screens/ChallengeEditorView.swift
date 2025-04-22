@@ -18,4 +18,5 @@ struct ChallengeEditorView : View {
 
 #Preview {
     ChallengeEditorView()
+        .environment(Coordinator())
 }

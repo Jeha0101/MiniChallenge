@@ -11,10 +11,6 @@ import Observation
 @Observable final class Coordinator{
     var route: [ViewType] = []
     
-    init(){
-        push(.main)
-    }
-    
     func push(_ viewPath: ViewType){
         route.append(viewPath)
         print("Success appending view")

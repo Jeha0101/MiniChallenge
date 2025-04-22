@@ -19,4 +19,5 @@ struct CompletedChallengesView : View {
 
 #Preview {
     CompletedChallengesView()
+        .environment(Coordinator())
 }

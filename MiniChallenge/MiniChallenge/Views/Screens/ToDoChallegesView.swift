@@ -24,4 +24,5 @@ struct ToDoChallegesView : View {
 
 #Preview{
     ToDoChallegesView()
+        .environment(Coordinator())
 }
