@@ -7,40 +7,56 @@
 
 import Foundation
 
-enum DurationType {
-    case oneDay
-    case threeDays
-    case fiveDays
-    case oneWeek
-    
-    var displayName : String {
-        switch self {
-        case .oneDay: return "하루"
-        case .threeDays: return "3일"
-        case .fiveDays: return "5일"
-        case .oneWeek: return "7일"
-        }
-    }
-}
-
-enum ChallengeStateType {
-    case toDo
-    case onGoing
-    case completed
-}
-
 struct Challenge : Identifiable {
     let id = UUID()
     var topic : String = ""
     var description : String = ""
     
-    var duration : DurationType = .oneWeek
     var isNotiEnabled : Bool = true
-    var notiTime : String = ""//String..은 아닐텐데 나중에 다시 알아보자
+    var notiTime = Date()
     
     var challengeState : ChallengeStateType = .toDo
     
-    var startDate : String = ""
-    var dueDate : String = ""
-    var completionDate : String = "" //이 곳 타입도 나중에 고치기
+    let calendar = Calendar.current         // calendar 객체 선언
+    var duration : DurationType = .oneWeek  // 도전 기한 선택
+    var dueDate : Int = 7                   // 도전 기한
+    
+    var startDate : Date = Date()           // 도전 시작한 날
+    var endDate : Date = Date()                      // 도전 끝 예정 날
+    var completionDate : Date = Date()             // 진짜로 끝난 날
+    
+    func getTimeString() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "a h:mm"
+        formatter.locale = Locale(identifier: "ko-KR")
+        formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
+        let formattedTime = formatter.string(from : notiTime)
+        
+        return formattedTime
+    }
+        
+    mutating func changeStateToDotoOngoing(){
+        challengeState = .onGoing
+        startDate = Date()
+        
+        switch duration {
+        case .oneDay:
+            dueDate = 1
+        case .threeDays:
+            dueDate = 3
+        case .fiveDays:
+            dueDate = 5
+        case .oneWeek:
+            dueDate = 7
+        }
+        
+        endDate = calendar.date(byAdding: .day, value: dueDate, to: startDate)!
+    }
+    
+    mutating func changeStateOngoingtoCompleted(){
+        challengeState = .completed
+    }
+    mutating func changeStateOngoingtoToDo(){
+        challengeState = .toDo
+    }
 }

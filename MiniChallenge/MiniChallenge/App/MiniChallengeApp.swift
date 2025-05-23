@@ -10,25 +10,26 @@ import SwiftUI
 @main
 struct MiniChallengeApp: App {
     @State var coordinator : Coordinator = Coordinator()
+    @State private var challengeLists = ChallengeLists()
     
     var body: some Scene {
         WindowGroup {
             NavigationStack(path: $coordinator.route){
-                MainView()
+                MainView(challengeLists: $challengeLists)
                     .environment(coordinator)
                     .navigationDestination(for: ViewType.self) { value in
                         switch value {
                         case .main :
-                            MainView()
+                            MainView(challengeLists: $challengeLists)
                                 .environment(coordinator)
                         case .challengeEditor :
-                            ChallengeEditorView()
+                            ChallengeEditorView(challengeLists: $challengeLists)
                                 .environment(coordinator)
                         case .completedChallengs :
-                            CompletedChallengesView()
+                            CompletedChallengesView(challengeLists: $challengeLists)
                                 .environment(coordinator)
                         case .toDoChallenges :
-                            ToDoChallegesView()
+                            ToDoChallegesView(challengeLists: $challengeLists)
                                 .environment(coordinator)
                         }
                     }

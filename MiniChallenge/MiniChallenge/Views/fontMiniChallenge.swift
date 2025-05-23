@@ -8,6 +8,8 @@
 import SwiftUI
 
 extension Font{
+    static let basicFontSmall : Font = custom("Ownglyph_PDH-Rg", size:  20)
     static let basicFontRegular: Font = custom("Ownglyph_PDH-Rg", size:  24)
     static let basicFontLarge : Font = custom("Ownglyph_PDH-Rg", size: 32)
+    static let basicFontTitle : Font = custom("Ownglyph_PDH-Rg", size : 60)
 }
